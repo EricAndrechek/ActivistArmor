@@ -1,50 +1,36 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
-import MapView from 'react-native-maps';
+
 import GestureRecognizer from 'react-native-swipe-gestures';
+
+import MapView from 'react-native-maps';
 
 import {connect} from 'react-redux';
 
 class MapScreen extends React.Component {
   render(){
     return (
+      <MapView
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
       <GestureRecognizer style={styles.container} onSwipeRight={this._onSwipeRight}>
+        <Header 
+            backgroundColor='#E07A5F'
+            centerComponent={{ text: "Header", style: styles.headerText}}
+          ></Header>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <MapView
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          />
           <TouchableOpacity onPress={() => this.props.increaseCounter()}>
             <Text style={styles.getStartedText}>
               CountUp
             </Text>
           </TouchableOpacity>
-
-          
           <Text style={styles.getStartedText}>{this.props.counter}</Text>
-          
-          <OptionButton
-            icon="md-school"
-            label="Read the Expo documentation"
-          />
-
-          <OptionButton
-            icon="md-compass"
-            label="Read the React Navigation documentation"
-            
-          />
-
-          <OptionButton
-            icon="ios-chatboxes"
-            label="Ask a question on the forums"
-          
-            isLastOption
-          />
         </ScrollView>
       </GestureRecognizer>
     );
@@ -53,18 +39,6 @@ class MapScreen extends React.Component {
   _onSwipeRight = gestureState =>{
     this.props.navigation.navigate('Home')
   }  
-}
-
-function OptionButton({ icon, label, onPress, isLastOption }) {
-  return (
-    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>{label}</Text>
-        </View>
-      </View>
-    </RectButton>
-  );
 }
 
 
@@ -84,29 +58,13 @@ function mapDispatchToProps(dispatch){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingTop: 30,
   },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
+  headerText:{
+    color: '#F4F1DE',
+    fontSize: 20,
   },
 });
 
