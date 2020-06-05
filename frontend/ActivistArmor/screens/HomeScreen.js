@@ -70,7 +70,7 @@ class HomeScreen extends React.Component{
   }
   
   _onSwipeLeft = gestureState =>{
-    this.props.navigation.navigate('Links')
+    this.props.navigation.navigate('Map')
   }  
 }
 
