@@ -7,7 +7,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import FeedScreen from './screens/FeedScreen';
 import MapScreen from './screens/MapScreen';
-import PostScreen from './screens/postscreens/postscreen';
+import PostScreen from './screens/postscreens/PostScreen';
 
 const BottomTab = createBottomTabNavigator();
 

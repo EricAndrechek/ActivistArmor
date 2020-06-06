@@ -9,6 +9,9 @@ import MapView, {Marker} from 'react-native-maps';
 
 import {connect} from 'react-redux';
 
+
+import CustomHeader from '../components/Header'
+
 const data = [
   {
     lat: 37.78825, 
@@ -30,13 +33,7 @@ class MapScreen extends React.Component {
   render(){
     return (
       <GestureRecognizer style={styles.container} onSwipeRight={this._onSwipeRight}>
-        <Header 
-            backgroundColor='#fafafa'
-            centerComponent={{ text: "Map", style: styles.headerText}}
-            containerStyle={{
-              height: 60,
-            }}
-        />
+        <CustomHeader nav={this.props.navigation} title={"Map"}/>
         <MapView
         style={styles.container}
           initialRegion={{

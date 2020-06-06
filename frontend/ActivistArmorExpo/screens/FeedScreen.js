@@ -9,11 +9,16 @@ import {
   FlatList
 } from 'react-native';
 
+import {NavBar} from 'galio-framework'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
+
 import {Header} from 'react-native-elements'
 import {ScrollView} from 'react-native-gesture-handler';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import {connect} from 'react-redux';
+
+import CustomHeader from '../components/Header'
 
 const data = [
   {
@@ -38,19 +43,12 @@ class FeedScreen extends React.Component{
       <GestureRecognizer 
       style={styles.container}
       onSwipeLeft={this._onSwipeLeft}>
-        <Header 
-            backgroundColor='#fafafa'
-            centerComponent={{ text: "Feed", style: styles.headerText}}
-            containerStyle={{
-              height: 60,
-            }}
+        <CustomHeader nav={this.props.navigation} title={"Feed"}/>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <Post postData={item} />}
+          keyExtractor={item => item.id}
         />
-
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Post postData={item} />}
-        keyExtractor={item => item.id}
-      />
         
       </GestureRecognizer>
     );
@@ -106,10 +104,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30,
-  },
-  headerText:{
-    color: 'black',
-    fontSize: 20,
   },
   post: {
     borderWidth: 0,
