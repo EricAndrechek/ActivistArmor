@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import * as React from 'react';
 
-import HomeScreen from '../screens/HomeScreen';
+import FeedScreen from '../screens/FeedScreen';
 import MapScreen from '../screens/MapScreen';
 import CaptureScreen from '../screens/postscreens/capturescreen';
 
@@ -15,10 +15,10 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Feed"
+        component={FeedScreen}
         options={{
-          title: 'Home',
+          title: 'Feed',
         }}
       />
       <BottomTab.Screen

@@ -5,9 +5,26 @@ import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import {Header} from 'react-native-elements'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 
 import {connect} from 'react-redux';
+
+const data = [
+  {
+    lat: 37.78825, 
+    long: -122.4324,
+    title: "mark1",
+    description: "descrip1",
+    id: 1,
+  },
+  {
+    lat: 37.79825, 
+    long: -122.4324,
+    title: "mark2",
+    description: "descrip2",
+    id: 2,
+  }
+]
 
 class MapScreen extends React.Component {
   render(){
@@ -15,7 +32,7 @@ class MapScreen extends React.Component {
       <GestureRecognizer style={styles.container} onSwipeRight={this._onSwipeRight}>
         <Header 
             backgroundColor='#E07A5F'
-            centerComponent={{ text: "Header", style: styles.headerText}}
+            centerComponent={{ text: "Map", style: styles.headerText}}
           ></Header>
         <MapView
         style={styles.container}
@@ -25,13 +42,21 @@ class MapScreen extends React.Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        />
+        >
+          {data.map(marker => ( 
+            <Marker
+              coordinate={{latitude: marker.lat, longitude: marker.long}}
+              title={marker.title}
+              description={marker.description}
+            />
+          ))}
+        </MapView>
       </GestureRecognizer>
     );
   }
   
   _onSwipeRight = gestureState =>{
-    this.props.navigation.navigate('Home')
+    this.props.navigation.navigate('Feed')
   }  
 }
 
