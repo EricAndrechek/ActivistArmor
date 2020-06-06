@@ -221,7 +221,7 @@ class VideoDetect:
         self.sns.delete_topic(TopicArn=self.snsTopicArn)
 
 
-def handleViolence(file, name):
+def handleViolenceVideo(file, name):
     #setup Boto3
     s3 = boto3.resource('s3')
     bucket = s3.Bucket('files-protest')
@@ -240,6 +240,15 @@ def handleViolence(file, name):
     response = bucket.delete_objects(Delete={
         'Objects': [{ 'Key': name }]
     })
-        
     return is_violence
+        
+def handleViolenceImage(file, name):
+    rekognition = boto3.client('rekognition')
+    response = rekognition.detect_moderation_labels(Image={
+        'Bytes': file
+    })
+    for label in response['ModerationLabels']:
+        if 'Violence' in label['Name']:
+            return True
+    return False
     
