@@ -9,8 +9,9 @@ import {
   FlatList
 } from 'react-native';
 
-import {NavBar} from 'galio-framework'
+import {NavBar, Input, theme} from 'galio-framework'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
+import {MaterialIcons} from '@expo/vector-icons'
 
 export default class CustomHeader extends React.Component{
   renderRight = () => {
@@ -27,13 +28,24 @@ export default class CustomHeader extends React.Component{
   }
   render(){
     return(
-      <NavBar
-        title={this.props.title}
-        titleStyle={styles.headerText}
-        right={this.renderRight(this.props)}
-        left={<LeftMenu navigation={this.props.nav}/>}
-        leftStyle={styles.leftButton}
-      />
+      <View style={styles.header}>
+        <NavBar
+          title={this.props.title}
+          titleStyle={styles.headerText}
+          right={this.renderRight(this.props)}
+          left={<LeftMenu navigation={this.props.nav}/>}
+          leftStyle={styles.leftButton}
+          style={{margin: 0}}
+        />
+        <Input
+          right
+          color="black"
+          style={styles.search}
+          placeholder="What are you looking for?"
+          onFocus={() => navigation.navigate('Pro')}
+          iconContent={<MaterialIcons size={16} color={theme.COLORS.MUTED} name="search" family="entypo" />}
+        />
+      </View>
     )
   }
 }
@@ -55,6 +67,9 @@ function LeftMenu(props){
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   headerText:{
     color: 'black',
     fontSize: 22,
@@ -65,5 +80,19 @@ const styles = StyleSheet.create({
   leftButton: {
     flex: 0.3,
     margin: 0,
-  }
+  },
+  search: {
+    width: 380,
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: '#cccccc',
+    marginBottom: 5,
+  },
+  header: {
+    backgroundColor: '#fff',
+    elevation: 20,
+    borderBottomWidth: 0,
+    marginBottom: 10,
+  },
 })

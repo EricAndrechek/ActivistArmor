@@ -9,10 +9,7 @@ import {
   FlatList
 } from 'react-native';
 
-import {NavBar} from 'galio-framework'
-import {MaterialCommunityIcons} from '@expo/vector-icons'
 
-import {Header} from 'react-native-elements'
 import {ScrollView} from 'react-native-gesture-handler';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -100,36 +97,44 @@ function mapDispatchToProps(dispatch){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e0e0e0',
   },
   contentContainer: {
     paddingTop: 30,
   },
   post: {
+    backgroundColor: 'white',
     borderWidth: 0,
+    borderRadius: 10,
+    borderColor: '#e0e0e0',
     flex: 1,
-    elevation: 2,
-    paddingVertical: 30,
+    elevation: 5,
+    paddingVertical: 10,
+    marginBottom: 20,
+    marginHorizontal: 8,
   },
   postLocation: {
-    padding: 5,
+    paddingBottom: 5,
     paddingHorizontal: 10,
     fontSize: 14,
+    fontWeight: 'bold',
   },
   postImage: {
     width: '100%',
-    height: 300,
+    height: 250,
   },
   postCommentBox: {
   },
   comment: {
+    color: '#9e9e9e',
     padding: 5,
     paddingHorizontal: 10,
     fontSize: 14,
   },
   infoBox: {
-    padding: 5,
-    paddingHorizontal: 10,
+    paddingTop: 5,
+    paddingHorizontal: 8,
+    fontWeight: 'bold',
   }
 });
 

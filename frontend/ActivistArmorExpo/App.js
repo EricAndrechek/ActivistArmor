@@ -3,6 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import { Icon } from "react-native-elements";
+
 import {createStackNavigator} from 'react-navigation-stack';
 
 import FeedScreen from './screens/FeedScreen';
@@ -34,20 +36,35 @@ export default function App() {
     <Provider store = {store}>
       <View style={styles.container}>
         <NavigationContainer>
-          <BottomTab.Navigator initialRouteName={"Feed"}>
+          <BottomTab.Navigator 
+            initialRouteName={"Feed"}
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ color, size }) => {
+                size = 40;
+                let iconName;
+                if (route.name === 'Feed') {
+                  iconName = 'ios-home';
+                  return <Icon name={iconName} size={size} color={color} type='ionicon'/>;
+                } else if (route.name === 'Map') {
+                  iconName = 'map';
+                  return <Icon name={iconName} size={size} color={color} type='material'/>;
+                } else if (route.name === 'Post') {
+                  iconName = 'camera';
+                  return <Icon name={iconName} size={size} color={color} type='material'/>;
+                }
+              },
+            })}
+            tabBarOptions={{
+              showLabel: false,
+            }}
+            >
             <BottomTab.Screen
               name="Feed"
               component={FeedScreen}
-              options={{
-                title: 'Feed',
-              }}
             />
             <BottomTab.Screen
               name="Map"
               component={MapScreen}
-              options={{
-                title: 'Map',
-              }}
             />
             <BottomTab.Screen
               name="Post"
