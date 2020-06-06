@@ -14,6 +14,6 @@ def postPicture():
         return jsonify({ "error": "No file specified" })
     media = request.files['file']
     #check for violence
-    print(handleViolence(media, request.form['location']))
+    print(handleViolence(media, request.form['name']))
     return "yeet lmfao"
     
