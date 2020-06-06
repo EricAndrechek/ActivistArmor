@@ -11,9 +11,6 @@ import {
 import {  Header} from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { MonoText } from '../components/StyledText';
-
-
 
 import {connect} from 'react-redux';
 
@@ -24,18 +21,11 @@ class HomeScreen extends React.Component{
       style={styles.container}
       onSwipeLeft={this._onSwipeLeft}>
         <Header 
-            backgroundColor='#E07A5F'
-            centerComponent={{ text: "Header", style: styles.headerText}}
+            backgroundColor='#fafafa'
+            centerComponent={{ text: "Feed", style: styles.headerText}}
           ></Header>
         <View style={styles.container}>
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <TouchableOpacity onPress={() => this.props.increaseCounter()}>
-              <Text style={styles.getStartedText}>
-                CountUp
-              </Text>
-            </TouchableOpacity>
-            <Text style={styles.getStartedText}>{this.props.counter}</Text>
-          </ScrollView>
+          <Text>Empty</Text>
         </View>
       </GestureRecognizer>
     );
@@ -71,7 +61,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   headerText:{
-    color: '#F4F1DE',
+    color: 'black',
     fontSize: 20,
   },
 });

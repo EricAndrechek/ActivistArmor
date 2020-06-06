@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
+import {Header} from 'react-native-elements'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import MapView from 'react-native-maps';
@@ -11,27 +12,20 @@ import {connect} from 'react-redux';
 class MapScreen extends React.Component {
   render(){
     return (
-      <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
       <GestureRecognizer style={styles.container} onSwipeRight={this._onSwipeRight}>
         <Header 
             backgroundColor='#E07A5F'
             centerComponent={{ text: "Header", style: styles.headerText}}
           ></Header>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <TouchableOpacity onPress={() => this.props.increaseCounter()}>
-            <Text style={styles.getStartedText}>
-              CountUp
-            </Text>
-          </TouchableOpacity>
-          <Text style={styles.getStartedText}>{this.props.counter}</Text>
-        </ScrollView>
+        <MapView
+        style={styles.container}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
       </GestureRecognizer>
     );
   }
