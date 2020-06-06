@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { RNCamera } from 'react-native-camera';
 
 import Ionicon from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+
+const PendingView = () => (
+  <View
+    style={{
+      flex: 1,
+      backgroundColor: 'black',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <Text>Waiting</Text>
+  </View>
+);
 
 export default class CaptureScreen extends Component {
   constructor(props) {
@@ -70,6 +84,7 @@ export default class CaptureScreen extends Component {
           flashMode={this.state.flashMode}
         >
           {({ camera, status }) => {
+            if (status !== 'READY') return <PendingView />;
             return (
               <View style={styles.container}>
                 <View style={styles.bar}>

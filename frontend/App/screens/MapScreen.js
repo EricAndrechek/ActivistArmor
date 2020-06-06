@@ -26,7 +26,7 @@ const data = [
 class MapScreen extends React.Component {
   render(){
     return (
-      <View>
+      <View style={styles.container}>
         <Header 
             backgroundColor='#fafafa'
             centerComponent={{ text: "Map", style: styles.headerText}}
@@ -35,13 +35,16 @@ class MapScreen extends React.Component {
             }}
         />
         <MapView
-        style={styles.container}
+          style={styles.map}
           initialRegion={{
             latitude: 37.78825,
             longitude: -122.4324,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
+          showsUserLocation={true}
+          showsMyLocationButton={false}
+          zoomEnabled = {true}
         >
           {data.map(marker => ( 
             <Marker
@@ -75,12 +78,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  map: {
+    flex: 1,
+  },
   contentContainer: {
     paddingTop: 30,
   },
   headerText:{
     color: 'black',
     fontSize: 20,
+    paddingBottom: 20,
   },
 });
 
