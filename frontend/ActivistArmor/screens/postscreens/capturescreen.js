@@ -38,12 +38,11 @@ export default class CaptureScreen extends Component {
     })
   }
 
-  takePicture = async () => {
+  takePicture = () => {
     if (this.camera) {
-      let photo = await this.camera.takePictureAsync();
-
+        this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
     }
-  }
+ };
 
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

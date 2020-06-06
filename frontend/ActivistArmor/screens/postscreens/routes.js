@@ -1,38 +1,27 @@
 
+
+import React, { Component } from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import CaptureScreen from './capturescreen';
 import UploadScreen from './uploadscreen';
 import PreviewPicture from './previewpicture';
 
-const SettingsStack = createStackNavigator();
-export default function UploadScreens() {
-  return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={CaptureScreen} />
-      <SettingsStack.Screen name="Details" component={UploadScreen} />
-    </SettingsStack.Navigator>
-  );
-}
-/*
-const Routes = createStackNavigator();
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-export default function UploadScreens({ navigation, route }) {
+const Stack = createMaterialTopTabNavigator();
 
+export default function PostScreens() {
   return (
-    <Routes.Navigator initialRouteName={Preview}>
-      <Routes.Screen
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen
         name="Capture"
         component={CaptureScreen}
       />
-      <Routes.Screen
+      <Stack.Screen
         name="Upload"
         component={UploadScreen}
       />
-      <Routes.Screen
-        name="Preview"
-        component={PreviewPicture}
-      />
-    </Routes.Navigator>
+    </Stack.Navigator>
   );
-}
-*/
+};

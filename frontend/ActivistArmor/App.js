@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-const Stack = createStackNavigator();
+import {createStackNavigator} from 'react-navigation-stack';
+
+import FeedScreen from './screens/FeedScreen';
+import MapScreen from './screens/MapScreen';
+import PostScreens from './screens/postscreens/routes';
+
+const BottomTab = createBottomTabNavigator();
 
 import { createStore } from 'redux';
 import {Provider} from 'react-redux';
@@ -24,14 +29,31 @@ const reducer = (state = initialState, action) => {
 const store = createStore(reducer);
 
 
-export default function App(props) {
+export default function App() {
   return (
     <Provider store = {store}>
       <View style={styles.container}>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
+          <BottomTab.Navigator initialRouteName={"Feed"}>
+            <BottomTab.Screen
+              name="Feed"
+              component={FeedScreen}
+              options={{
+                title: 'Feed',
+              }}
+            />
+            <BottomTab.Screen
+              name="Map"
+              component={MapScreen}
+              options={{
+                title: 'Map',
+              }}
+            />
+            <BottomTab.Screen
+              name="Post"
+              component={PostScreens}
+            />
+          </BottomTab.Navigator>
         </NavigationContainer>
       </View>
     </Provider>
