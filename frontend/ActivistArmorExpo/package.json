@@ -36,6 +36,7 @@
     "react-native-elements": "^2.0.2",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-maps": "^0.27.1",
+    "react-native-material-textfield": "^0.16.1",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",

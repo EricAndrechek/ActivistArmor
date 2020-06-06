@@ -1,13 +1,15 @@
 
 import * as React from 'react';
 import {ImageBackground, Text, TouchableOpacity, Image, View, StyleSheet } from 'react-native';
+
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import {Header, Card} from 'react-native-elements';
 import {connect} from 'react-redux';
 //import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import CustomHeader from '../../components/Header'
+import CustomText from '../../components/TextField'
 
 class PostScreen extends React.Component {
   state = {
@@ -18,31 +20,15 @@ class PostScreen extends React.Component {
     let { image } = this.state;
 
     return (
-      <View style={{flex: 1}}>
-        <Header 
-            backgroundColor='#fafafa'
-            centerComponent={{ text: "Post", style: styles.headerText}}
-            containerStyle={{
-              height: 60,
-            }}
-        />
+      <View style={styles.container}>
+        <CustomHeader nav={this.props.navigation} title={"Post"}/>
         <View style={{ flex: 1}}>
-
-
-          <TouchableOpacity onPress={this._pickImage} style={styles.infoCard}>
-            <Text style={styles.infoCardText}>Pick an image from camera roll</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={this._takePhoto} style={styles.infoCard}>
-            <Text style={styles.infoCardText}>Take photo</Text>
-          </TouchableOpacity>
-
           <View>
             {
               image ?
               <View>
                 <View style={styles.imageContainer}>
-                  <Image source={{ uri: `data:${"image"};base64,${image}` }} style={styles.emptyPhoto} />
+                  <Image source={{ uri: image }} style={styles.emptyPhoto} />
                 </View>  
               </View>
               : 
@@ -54,8 +40,20 @@ class PostScreen extends React.Component {
               </View>
             }  
           </View>
-          <TouchableOpacity onPress={this._submitPhoto} style={styles.infoCard}>
-            <Text style={styles.infoCardText}> Submit photo </Text>
+          
+          <CustomText label={"Location"}/>
+          <CustomText label={"Caption"}/>
+
+          <View style={{height: 20}}/>
+
+          <TouchableOpacity onPress={this._pickImage} style={styles.infoCard}>
+            <Text style={styles.infoCardText}>Choose Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._takePhoto} style={styles.infoCard}>
+            <Text style={styles.infoCardText}>Take photo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._submitPhoto} style={styles.postButton}>
+            <Text style={styles.infoCardText}> Post </Text>
           </TouchableOpacity> 
         </View>
       </View>
@@ -87,10 +85,10 @@ class PostScreen extends React.Component {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
-        base64: true,
+        base64: false,
       });
       if (!result.cancelled) {
-        this.setState({ image: result.base64 });
+        this.setState({ image: result.uri });
       }
     } catch (E) {
       console.log(E);
@@ -104,10 +102,10 @@ class PostScreen extends React.Component {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
-        base64: true,
+        base64: false,
       });
       if (!result.cancelled) {
-        this.setState({ image: result.base64 });
+        this.setState({ image: result.uri });
       }
     } catch (E) {
       console.log(E);
@@ -136,12 +134,13 @@ function mapDispatchToProps(dispatch){
 const styles = StyleSheet.create({
   container:{
     flex: 1,
+    backgroundColor: '#eeeeee',
   },
   headerBack:{ 
     height: 60,
   },
   imageContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     padding: 5,
     borderRadius: 20,
     marginHorizontal: 63,
@@ -172,16 +171,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
   },
   infoCard: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     marginHorizontal: 5,
     margin: 5,
     padding: 12,
     borderRadius: 5,
-    elevation: 5,
-    shadowOffset:{  width: 10,  height: 10,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    opacity: 0.75,
+    elevation: 2,
+  },
+  postButton: {
+    backgroundColor: 'white',
+    marginHorizontal: 120,
+    margin: 5,
+    padding: 12,
+    borderRadius: 5,
+    elevation: 2,
   },
   infoCardText: {
     textAlign: 'center',
