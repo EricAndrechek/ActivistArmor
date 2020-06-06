@@ -10,10 +10,10 @@ from pytube import YouTube
 
 class Check():
     def __init__(self, post):
+        self.name=None
         self.permalink = "https://reddit.com{}".format(post.permalink)
         self.url = post.url
         if self.valid_site():
-            print()
             if 'v.redd.it' in self.url:
                 self.reddit_download()
             elif 'youtube' in self.url:
@@ -40,9 +40,8 @@ class Check():
                     self.download(fname)
     
     def youtube_download(self, filename):
-        print('Downloading {}...'.format(self.url))
         yt = YouTube(self.url).streams.first().download(output_path=os.path.join(os.getcwd(), 'content'), filename=filename)
-        print('Saved to {}.mp4'.format(filename))
+        self.name = '{}.mp4'.format(filename)
 
     def reddit_download(self):
         site_url = "https://reddit.tube/parse"
@@ -64,7 +63,6 @@ class Check():
         return True
     
     def download(self, filename=None):
-        print("Downloading {}...".format(self.url))
         r = requests.get(self.url)
         try:
             ct = r.headers['content-type'].split('/')[1]
@@ -73,7 +71,7 @@ class Check():
             else:
                 fn = filename
             open(os.path.join(os.path.join(os.getcwd(), 'content'), fn), 'wb+').write(r.content)
-            print('Saved to {}'.format(fn))
+            self.name = fn
     
     def valid_site(self):
         try:

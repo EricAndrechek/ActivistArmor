@@ -19,4 +19,7 @@ reddit = praw.Reddit(
 
 sub = reddit.subreddit('Bad_Cop_No_Donut')
 for submission in sub.stream.submissions():
-    contentcleaner.Check(submission)
+    file = contentcleaner.Check(submission)
+    if file.name:
+        # send the file.name to Jainil to test for cop and then violence
+        print('Saved to: {}'.format(file.name))
