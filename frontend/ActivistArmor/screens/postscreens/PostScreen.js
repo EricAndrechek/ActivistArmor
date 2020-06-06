@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 //import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-export default class CaptureScreen extends React.Component {
+class PostScreen extends React.Component {
   state = {
     image: null,
   };
@@ -19,30 +19,22 @@ export default class CaptureScreen extends React.Component {
 
     return (
       <View style={{flex: 1}}>
-          <Header 
-              backgroundColor='#fff'
-              leftComponent={{icon: 'menu', color: 'black'}}
-              centerComponent={{ text: 'Capture', style: styles.headerText}}
-              //rightComponent={{ text: 'Right component', style: styles.headerText }}
-              containerStyle={{
-                elevation: 10,
-                shadowOffset:{  width: 10,  height: 10,  },
-                shadowColor: 'black',
-                shadowOpacity: 1.0,
-                backgroundColor: 'transparent',
-                paddingBottom: 20,
-                height: 60,
-              }}
-              >
-          </Header>
+        <Header 
+            backgroundColor='#fafafa'
+            centerComponent={{ text: "Post", style: styles.headerText}}
+            containerStyle={{
+              height: 60,
+            }}
+        />
         <View style={{ flex: 1}}>
+
 
           <TouchableOpacity onPress={this._pickImage} style={styles.infoCard}>
             <Text style={styles.infoCardText}>Pick an image from camera roll</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this._takePhoto} style={styles.infoCard}>
-            <Text style={styles.infoCardText}>Take photo2</Text>
+            <Text style={styles.infoCardText}>Take photo</Text>
           </TouchableOpacity>
 
           <View>
@@ -50,14 +42,14 @@ export default class CaptureScreen extends React.Component {
               image ?
               <View>
                 <View style={styles.imageContainer}>
-                  <Image source={{ uri: `data:${"image"};base64,${image}` }} style={styles.foodRecommendation} />
+                  <Image source={{ uri: `data:${"image"};base64,${image}` }} style={styles.emptyPhoto} />
                 </View>  
               </View>
               : 
               <View style={styles.imageContainer}>
                   <Image source={
-                    require('../assets/images/nophoto.jpg')
-                  } style={styles.foodRecommendation} />
+                    require('../../assets/images/nophoto.jpg')
+                  } style={styles.emptyPhoto} />
                 
               </View>
             }  
@@ -123,7 +115,6 @@ export default class CaptureScreen extends React.Component {
   };
 
   _submitPhoto = () => {
-    //console.log(this.state.image)
     this.props.navigation.navigate('Analyze', {image: this.state.image})
   }
 }
@@ -156,7 +147,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 63,
     margin: 5,
   },
-  foodRecommendation: {
+  emptyPhoto: {
     alignSelf: 'center',
     width: 250,
     height: 200,
@@ -170,10 +161,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     marginBottom: 2,
   },
-  headerText: {
-    fontSize: 25,
-    color: 'whitesmoke',
-    fontWeight: 'bold',
+  headerText:{
+    color: 'black',
+    fontSize: 20,
   },
   button: {
     borderRadius: 5,
@@ -198,3 +188,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 })
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);

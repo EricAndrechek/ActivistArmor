@@ -31,9 +31,12 @@ class MapScreen extends React.Component {
     return (
       <GestureRecognizer style={styles.container} onSwipeRight={this._onSwipeRight}>
         <Header 
-            backgroundColor='#E07A5F'
+            backgroundColor='#fafafa'
             centerComponent={{ text: "Map", style: styles.headerText}}
-          ></Header>
+            containerStyle={{
+              height: 60,
+            }}
+        />
         <MapView
         style={styles.container}
           initialRegion={{
@@ -47,7 +50,8 @@ class MapScreen extends React.Component {
             <Marker
               coordinate={{latitude: marker.lat, longitude: marker.long}}
               title={marker.title}
-              description={marker.description}
+              description={marker.description}  
+              keyExtractor={marker => marker.id}
             />
           ))}
         </MapView>
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   headerText:{
-    color: '#F4F1DE',
+    color: 'black',
     fontSize: 20,
   },
 });

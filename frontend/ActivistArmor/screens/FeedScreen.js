@@ -41,6 +41,9 @@ class FeedScreen extends React.Component{
         <Header 
             backgroundColor='#fafafa'
             centerComponent={{ text: "Feed", style: styles.headerText}}
+            containerStyle={{
+              height: 60,
+            }}
         />
 
       <FlatList
@@ -99,6 +102,7 @@ function mapDispatchToProps(dispatch){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   contentContainer: {
     paddingTop: 30,

@@ -22,6 +22,10 @@ export default function PostScreens() {
         name="Upload"
         component={UploadScreen}
       />
+      <Stack.Screen
+        name="Preview"
+        component={PreviewPicture}
+      />
     </Stack.Navigator>
   );
 };
