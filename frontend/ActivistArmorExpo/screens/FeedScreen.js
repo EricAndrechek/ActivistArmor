@@ -10,12 +10,12 @@ import CustomBottomTab from '../components/BottomTab'
 const data = [
   {
     address: "Buffalo, New York",
-    image: require('../assets/images/buffaloriotattack.jpg'),
+    image: "https://i.redd.it/cqxp2xypqo941.jpg",
     id: 1,
   },
   {
     address: "London, UK",
-    image: require('../assets/images/londonattack.jpg'),
+    image: "https://i.redd.it/cqxp2xypqo941.jpg",
     id: 2,
   }
 ]
@@ -27,15 +27,16 @@ export default class FeedScreen extends React.Component{
   }
 
   componentDidMount(){
-    // this.receiveData()
+    this.receiveData()
   }
   
   receiveData = () => {
-    fetch('https://activistarmor.online/api/feed', {
+    fetch('http:/68.56.112.110/api/feed', {
       method: 'GET'
     }).then(res => res.json()).then(res => {
       this.setState({ data: res })
     })
+    console.log(data)
   }
 
   render(){
@@ -68,9 +69,8 @@ function Post(input){
         </TouchableOpacity>
       </View>
       {
-      (input.postData.image.uri.includes(".png") || input.postData.image.uri.includes(".jpg"))?
-
-      <Image source={input.postData.image} style={styles.postImage}/> 
+        input.postData.image.includes(".jpg")?
+      <Image source={{uri: "https://i.redd.it/cqxp2xypqo941.jpg"}} style={styles.postImage}/> 
       :
       <Video
         source={{uri: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/a285e2bb-a79f-488a-baa4-7bafa80fae96.mp4"}}
