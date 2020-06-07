@@ -25,9 +25,7 @@ def lf(fn, loc=None):
             print('checking violence')
             if violence.handleViolenceImage(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
                 print('violence')
-                blur.blur_faces(fn)
-                url = digitalocean.Storage().upload(fn)
-                mongo.upload(url, loc)
+                blur.blur_faces(fn, loc)
             else:
                 print('no violence')
                 remove(fn)
@@ -38,14 +36,8 @@ def lf(fn, loc=None):
         print('checking video')
         if facefinder.video_face(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
             print('checking violence')
-            if violence.handleViolenceVideo(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
-                print('violence')
-                blur.blur_faces(fn)
-                url = digitalocean.Storage().upload(fn)
-                mongo.upload(url, loc)
-            else:
-                print('no violence')
-                remove(fn)
+            print('violence')
+            url = digitalocean.Storage().upload(fn, loc)
         else:
             print('no face')
             remove(fn)

@@ -228,7 +228,7 @@ def handleViolenceVideo(name):
     s3 = boto3.resource('s3')
     bucket = s3.Bucket('files-protest')
     #upload file
-    bucket.upload_fileobj(os.path.join(os.path.join(os.getcwd(), 'content'), name), name)
+    bucket.upload_file('content/{}'.format(name), name)
     #rekognition
     analyzer= VideoDetect(name)
     analyzer.CreateTopicandQueue()
@@ -250,11 +250,10 @@ def handleViolenceVideo(name):
 def handleViolenceImage(name):
     print('begining aws')
     rekognition = boto3.client('rekognition')
-    f = open(os.path.join(os.path.join(os.getcwd(), 'content'), name))
+    f = open(os.path.join(os.path.join(os.getcwd(), 'content'), name), 'rb')
     response = rekognition.detect_moderation_labels(Image={
         'Bytes': f.read()
     })
-    print(response)
     for label in response['ModerationLabels']:
         if 'Violence' in label['Name']:
             return True

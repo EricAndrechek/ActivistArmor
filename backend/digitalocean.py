@@ -2,6 +2,7 @@ import os
 import boto3
 from boto3.s3.transfer import S3Transfer
 import subprocess
+import mongo
 
 class Storage():
     def __init__(self):
@@ -17,7 +18,7 @@ class Storage():
                         aws_access_key_id=client_id,
                         aws_secret_access_key=client_secret)
 
-    def upload(self, filename):
+    def upload(self, filename, loc):
         s = subprocess.Popen(['file', '--mime-type', '-b', 'content/{}'.format(filename)], stdout=subprocess.PIPE)
         mime = s.stdout.read().strip().decode("utf-8")
 
@@ -26,5 +27,6 @@ class Storage():
             "ContentDisposition": 'inline',
             "ACL": 'public-read'
         })
+        print('upload complete')
 
-        return "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/{}".format(filename)
+        mongo.upload("https://activist-armor.nyc3.cdn.digitaloceanspaces.com/{}".format(filename), loc)

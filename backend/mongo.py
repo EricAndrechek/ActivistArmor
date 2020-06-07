@@ -1,17 +1,29 @@
 import pymongo
 from datetime import datetime
 
-myclient = pymongo.MongoClient("mongodb+srv://activistarmor:JQKlJyZg0UDNcl6s@cluster0-mgi12.mongodb.net/content?retryWrites=true&w=majority")
-mydb = myclient["aa"]
+def db():
+    myclient = pymongo.MongoClient("mongodb+srv://activistarmor:JQKlJyZg0UDNcl6s@cluster0-mgi12.mongodb.net/content?retryWrites=true&w=majority")
+    mydb = myclient["content"]
+    c = mydb["aa"]
+    return c
 
 def map():
-    return mydb.find()
+    x  = []
+    cur = db().find().sort([('date', pymongo.ASCENDING)])
+    for i in cur:
+        x.append(i)
+    return x
 
 def upload(url, loc):
     now = datetime.now()
     date = now.strftime("%d/%m/%Y %H:%M:%S")
     mydict = {"url": url, "location": loc, "date": date}
-    x = mydb.insert_one(mydict)
+    x = db().insert_one(mydict)
+    print('added to database')
 
 def feed():
-    mydb.find().sort([('date', pymongo.ASCENDING)])
+    x  = []
+    cur = db().find().sort([('date', pymongo.ASCENDING)])
+    for i in cur:
+        x.append(i)
+    return x
