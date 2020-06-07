@@ -70,7 +70,7 @@ function Post(input){
       </View>
       {
         input.postData.image.includes(".jpg")?
-      <Image source={{uri: "https://i.redd.it/cqxp2xypqo941.jpg"}} style={styles.postImage}/> 
+      <Image source={{uri: input.postData.image}} style={styles.postImage}/> 
       :
       <Video
         source={{uri: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/a285e2bb-a79f-488a-baa4-7bafa80fae96.mp4"}}
