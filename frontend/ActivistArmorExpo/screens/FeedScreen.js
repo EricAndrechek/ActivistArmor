@@ -6,16 +6,21 @@ import {
   Text, 
   TouchableOpacity, 
   View,
-  FlatList
+  FlatList,
 } from 'react-native';
 
 
 import {ScrollView} from 'react-native-gesture-handler';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
+import {MaterialCommunityIcons} from '@expo/vector-icons'
+
+import {LinearGradient} from 'expo-linear-gradient';
+
 import {connect} from 'react-redux';
 
 import CustomHeader from '../components/Header'
+import CustomBottomTab from '../components/BottomTab'
 
 const data = [
   {
@@ -40,13 +45,18 @@ class FeedScreen extends React.Component{
       <GestureRecognizer 
       style={styles.container}
       onSwipeLeft={this._onSwipeLeft}>
-        <CustomHeader nav={this.props.navigation} title={"Feed"}/>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <Post postData={item} />}
-          keyExtractor={item => item.id}
-        />
         
+        <LinearGradient colors={['#2193b0', '#6dd5ed']} 
+          style={styles.container}>
+          <CustomHeader nav={this.props.navigation} title={"Feed"}/>
+        
+          <FlatList
+            data={data}
+            renderItem={({ item }) => <Post postData={item} />}
+            keyExtractor={item => item.id}
+            style={styles.listContainer}
+          />
+        </LinearGradient>
       </GestureRecognizer>
     );
   }
@@ -69,7 +79,12 @@ function Test(){
 function Post(input){
   return(
     <View style={styles.post}>
-      <Text style={styles.postLocation}>{input.postData.location}</Text>
+      <View style={styles.row}>
+        <Text style={styles.postLocation}>{input.postData.location}</Text>
+        <TouchableOpacity style={{paddingTop: 0}}>
+          <MaterialCommunityIcons name={'dots-horizontal'} size={20}/>
+        </TouchableOpacity>
+      </View>
       <Image source={input.postData.image} style={styles.postImage}/>
       <Text style={styles.infoBox}>
         Buffalo Riot Attack
@@ -97,21 +112,29 @@ function mapDispatchToProps(dispatch){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e0e0e0',
+  },
+  listContainer: {
+    flex: 1,
   },
   contentContainer: {
-    paddingTop: 30,
+    flex: 1,
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   post: {
     backgroundColor: 'white',
     borderWidth: 0,
-    borderRadius: 10,
+    borderRadius: 5,
     borderColor: '#e0e0e0',
     flex: 1,
     elevation: 5,
-    paddingVertical: 10,
+    paddingBottom: 10,
     marginBottom: 10,
-    marginHorizontal: 8,
+    marginHorizontal: 12,
   },
   postLocation: {
     paddingBottom: 5,
@@ -121,7 +144,7 @@ const styles = StyleSheet.create({
   },
   postImage: {
     width: '100%',
-    height: 250,
+    height: 200,
   },
   postCommentBox: {
   },

@@ -11,11 +11,10 @@ import {
 
 import {NavBar, Input, theme} from 'galio-framework'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import {MaterialIcons} from '@expo/vector-icons'
-
+import { Icon } from "react-native-elements";
 import {LinearGradient} from 'expo-linear-gradient'
 
-export default class CustomHeader extends React.Component{
+export default class CustomBottomTab extends React.Component{
   renderRight = () => {
     switch(this.props.title){
       case 'Feed':
@@ -30,26 +29,18 @@ export default class CustomHeader extends React.Component{
   }
   render(){
     return(
-      <View style={styles.header}>
-        <NavBar
-          title={this.props.title}
-          titleStyle={styles.headerText}
-          right={this.renderRight(this.props)}
-          left={<LeftMenu navigation={this.props.nav}/>}
-          leftStyle={styles.leftButton}
-          style={{margin: 0, paddingTop: 20, paddingBottom: 0}}
-          transparent={true}
-        />
-        {
-          this.props.title == "Post" ? <></>:
-          <Input
-            right
-            color="black"
-            style={styles.search}
-            placeholder="What are you looking for?"
-            iconContent={<MaterialIcons size={16} color={theme.COLORS.MUTED} name="search" family="entypo" />}
-          />
-        }
+      <View style={styles.bottomTab}>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={() => (this.props.nav.navigate('Feed'))} style={styles.feedBox}>
+            <Icon name={"ios-home"} size={40} color={"black"} type='ionicon'/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => (this.props.nav.navigate('Map'))} style={styles.mapBox}>
+            <Icon name={'map'} size={40} color={"black"} type='material'/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => (this.props.nav.navigate('Post'))} style={styles.postBox}>
+            <Icon name={'camera'} size={40} color={"black"} type='material'/>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -94,8 +85,30 @@ const styles = StyleSheet.create({
     borderColor: '#cccccc',
     marginBottom: 5,
   },
-  header: {
+  bottomTab: {
+    height: 60,
     borderBottomWidth: 0,
-    marginBottom: 10,
+  },
+  rowBar: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  feedBox: {
+    flex: 1,
+  },
+  mapBox: {
+    flex: 1,
+  },
+  postBox: {
+    flex: 1,
   },
 })

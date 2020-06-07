@@ -33,8 +33,9 @@ export default class CustomText extends Component {
           value={this.state.field}
           onChangeText={field => this.setState({field})}
           ref={this.fieldRef}
-          baseColor={'#616161'}
+          baseColor={'#fafafa'}
           multiline={this.props.multiline}
+          textColor={'#fafafa'}
         />
         </View>
     );
@@ -45,6 +46,6 @@ const styles = StyleSheet.create({
   box: {
     marginVertical: 0,
     padding: 0,
-    marginHorizontal: 20,
+    marginHorizontal: 28,
   }
 })

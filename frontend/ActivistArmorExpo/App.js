@@ -56,6 +56,7 @@ export default function App() {
             })}
             tabBarOptions={{
               showLabel: false,
+              style: styles.tabBar,
             }}
             >
             <BottomTab.Screen
@@ -82,4 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  tabBar: {
+    backgroundColor: '#6dd5ed',
+  }
 });

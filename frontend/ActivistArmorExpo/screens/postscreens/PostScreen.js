@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 //import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import {LinearGradient} from 'expo-linear-gradient';
 import CustomHeader from '../../components/Header'
 import CustomText from '../../components/TextField'
 
@@ -25,7 +26,8 @@ class PostScreen extends React.Component {
     let { image } = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.container}>
+      <LinearGradient colors={['#2193b0', '#6dd5ed']} 
+      style={styles.container}>
         <CustomHeader nav={this.props.navigation} title={"Post"}/>
         <View style={{ flex: 1 }}>
           <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', margin: 10 }}>
@@ -47,7 +49,7 @@ class PostScreen extends React.Component {
             </View>
           </View>
 
-          <CustomText label={"Caption"} multiline={true}/>
+          <CustomText label={"Caption"}/>
           <GooglePlacesAutocomplete
             placeholder='Where did this happen?'
             fetchDetails={true}
@@ -57,7 +59,7 @@ class PostScreen extends React.Component {
               this.setState({ address: details.formatted_address, lat: coords.lat, long: coords.lng })
               console.log(this.state.lat);
             }}
-            placeholderTextColor={'#616161'}
+            placeholderTextColor={'#fafafa'}
             styles={{ 
               textInputContainer: { 
                 backgroundColor: 'transparent',
@@ -66,6 +68,7 @@ class PostScreen extends React.Component {
 
               },
               textInput: {
+                color: '#fafafa',
                 backgroundColor: 'transparent',
                 borderBottomWidth: 0.5,
                 borderBottomColor: '#999',
@@ -86,7 +89,7 @@ class PostScreen extends React.Component {
             <Text style={styles.infoCardText}>Report This Incident</Text>
           </TouchableOpacity> 
         </View>
-      </KeyboardAvoidingView>
+      </LinearGradient>
     );
   }
 
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
   },
   infoCard: {
-    backgroundColor: 'white',
+    backgroundColor: 'lightblue',
     margin: 5,
     padding: 12,
     borderRadius: 5,
