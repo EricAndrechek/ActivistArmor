@@ -48,7 +48,7 @@ export default class FeedScreen extends React.Component{
           style={styles.listContainer}
         >
           {data.map((item, key) => ( 
-            <Post postData={item} key={key}/>
+            <Post postData={item} key={key} />
           ))}
         </ScrollView>
         <CustomBottomTab nav={this.props.navigation}/>

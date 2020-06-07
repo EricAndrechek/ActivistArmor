@@ -151,12 +151,11 @@ export default class PostScreen extends React.Component {
     let photo = { uri: this.state.image}
     let formdata = new FormData();
     
-    formdata.append("lat", this.state.lat)
-    formdata.append("long", this.state.long)
+    formdata.append("location", '(' + this.state.lat.toString() + ", " + this.state.long.toString() + ")")
     formdata.append("file", {uri: photo, name: 'image.jpg', type: 'image/jpeg'})
 
-    fetch('https://activistarmor.online/api/upload',{
-      method: 'post',
+    fetch('https://activistarmor.space/post',{
+      method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
       },
