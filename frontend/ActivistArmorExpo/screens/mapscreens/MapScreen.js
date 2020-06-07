@@ -79,7 +79,7 @@ class MapScreen extends React.Component {
               </Marker>
             ))}
           </MapView>
-          
+          <CustomBottomTab nav={this.props.navigation}/>
         </LinearGradient>
       </GestureRecognizer>
     );

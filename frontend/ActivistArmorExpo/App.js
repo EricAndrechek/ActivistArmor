@@ -26,7 +26,7 @@ const store = createStore(reducer);
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const Stack = createMaterialTopTabNavigator();
+const Stack = createBottomTabNavigator();
 function Maps() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={"Map"} 
@@ -35,8 +35,8 @@ function Maps() {
         opacity: 0,
       }
     }}>
-      <Stack.Screen name="Map" component={MapScreen} />
-      <Stack.Screen name="View" component={ViewScreen} />
+      <Stack.Screen name="Map" component={MapScreen} options={{tabBarVisible: false}}/>
+      <Stack.Screen name="View" component={ViewScreen} options={{tabBarVisible: false}}/>
     </Stack.Navigator>
   );
 }
@@ -50,22 +50,6 @@ export default function App() {
         <NavigationContainer>
           <BottomTab.Navigator 
             initialRouteName={"Feed"}
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ color, size }) => {
-                size = 40;
-                let iconName;
-                if (route.name === 'Feed') {
-                  iconName = 'ios-home';
-                  return <Icon name={iconName} size={size} color={color} type='ionicon'/>;
-                } else if (route.name === 'Map') {
-                  iconName = 'map';
-                  return <Icon name={iconName} size={size} color={color} type='material'/>;
-                } else if (route.name === 'Post') {
-                  iconName = 'camera';
-                  return <Icon name={iconName} size={size} color={color} type='material'/>;
-                }
-              },
-            })}
             tabBarOptions={{
               showLabel: false,
               style: styles.tabBar,
@@ -97,5 +81,6 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     backgroundColor: '#6dd5ed',
+    height: 0,
   }
 });

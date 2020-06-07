@@ -42,12 +42,15 @@ function mapDispatchToProps(dispatch){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'black',
   },
   backButton: {
     margin: 10,
+    color: 'white',
   },
   backButtonBox: {
     color: 'white',
+    marginTop: 20,
     paddingLeft: 10,
   }
 })

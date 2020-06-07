@@ -11,6 +11,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import {LinearGradient} from 'expo-linear-gradient';
 import CustomHeader from '../../components/Header'
+import CustomBottomTab from '../../components/BottomTab'
 import CustomText from '../../components/TextField'
 
 import API_KEY from '../../env'
@@ -90,6 +91,7 @@ class PostScreen extends React.Component {
           <TouchableOpacity onPress={this._submitPhoto} style={styles.postButton}>
             <Text style={styles.infoCardText}>Report This Incident</Text>
           </TouchableOpacity> 
+          <CustomBottomTab nav={this.props.navigation}/>
         </View>
       </LinearGradient>
     );

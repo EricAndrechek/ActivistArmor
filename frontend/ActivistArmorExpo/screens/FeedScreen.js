@@ -73,6 +73,7 @@ class FeedScreen extends React.Component{
             keyExtractor={item => item.id}
             style={styles.listContainer}
           />
+          <CustomBottomTab nav={this.props.navigation}/>
         </LinearGradient>
       </GestureRecognizer>
     );
