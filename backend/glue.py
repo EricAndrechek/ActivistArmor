@@ -1,57 +1,56 @@
 import subprocess
 import facefinder
-from violence import handleViolence
+import violence
 import digitalocean
 import os
 import metadata
+import blur
+import mongo
 
 # glue.py is the glue that holds all the code together
 
-def uf(fn, location, media):
-    lat, lon = metadata.coords(fn)
-    metadata.wipe(fn)
-    if lat is not None and lon is not None:
-        lf(fn, (lat, lon), media)
-    else:
-        lf(fn, file)
 
-def lf(fn, loc=None, media):
-    # LocalFile, takes filename to local file, location
-    # that has been download from flask server or scraper
-    # and checks if it has faces before continuing
+def lf(fn, loc=None):
+    if loc is None:
+        lat, lon = metadata.coords(fn)
+        if lat is not None and lon is not None:
+            loc = (lat, lon)
+    metadata.wipe(fn)
+
     ft = filetype(fn)
+    print(ft)
     if ft == 1:
-        if facefinder.image_face(fn):
-            if 'video' in media.content_type:
-                if handleViolenceVideo(media, fn):
-                    # blur faces that aren't cops
-                    url = digitalocean.Storage().upload(fn)
-                    # add url and loc to mongoDB
-                else:
-                    remove(fn)
-            elif 'image' in media.content_type:
-                content = media.read()
-                if handleViolenceImage(content, fn):
-                    # blur faces that aren't cops
-                    url = digitalocean.Storage().upload(fn)
-                    # add url and loc to mongoDB
-                else:
-                    remove(fn)
-            else:
-                remove(fn)
-        else:
-            remove(fn)
-    elif ft == 2:
-        if facefinder.video_face(fn):
-            if handleViolence(fn):
-                # blur faces that aren't cops
+        print('checking photo')
+        if facefinder.image_face(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
+            print('checking violence')
+            if violence.handleViolenceImage(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
+                print('violence')
+                blur.blur_faces(fn)
                 url = digitalocean.Storage().upload(fn)
-                # and url and loc to mongoDB
+                mongo.upload(url, loc)
             else:
+                print('no violence')
                 remove(fn)
         else:
+            print('no faces found')
+            remove(fn)
+    elif ft == 0:
+        print('checking video')
+        if facefinder.video_face(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
+            print('checking violence')
+            if violence.handleViolenceVideo(os.path.join(os.path.join(os.getcwd(), 'content'), fn)):
+                print('violence')
+                blur.blur_faces(fn)
+                url = digitalocean.Storage().upload(fn)
+                mongo.upload(url, loc)
+            else:
+                print('no violence')
+                remove(fn)
+        else:
+            print('no face')
             remove(fn)
     else:
+        print('why did you run here wtf')
         remove(fn)
 
 def filetype(filename):

@@ -13,13 +13,16 @@ CORS(app)
 def postPicture():
     if 'file' not in request.files:
         return jsonify({ "error": "No file specified" })
+    location = request.form.get('location')
     media = request.files['file']
     ending = secure_filename(media.filename).split('.')[1]
     filename = "{}.{}".format(str(uuid.uuid4()), ending)
     fullname = os.path.join(os.path.join(os.getcwd(), 'content'), filename)
     media.save(fullname)
-    glue.uf(filename, location, media)
-    return "yeet lmfao" # we will need to change this to something useful
+    glue.lf(filename, location, media)
+    return "Content receive"
+
+@app.route("/api/")
 
 
 if __name__ == '__main__':

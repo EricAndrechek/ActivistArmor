@@ -20,9 +20,9 @@ class Check():
                 filen = self.url.split('v=')[1]
                 if '&' in filen:
                     filen = filen.split('&')[0]
-                self.youtube_download(filen)
+                self.youtube_download()
             elif 'youtu.be' in self.url:
-                self.youtube_download(self.url.rsplit('/', 1)[1])
+                self.youtube_download()
             elif self.is_downloadable():
                 self.download(self.url.rsplit('/', 1)[1])
             else:
@@ -41,8 +41,11 @@ class Check():
                     self.download(fname)
     def youtube_download(self):
         fn = str(uuid.uuid4())
-        yt = YouTube(self.url).streams.first().download(output_path=os.path.join(os.getcwd(), 'content'), filename=fn)
-        glue.lf('{}.mp4'.format(fn))
+        try:
+            yt = YouTube(self.url).streams.first().download(output_path=os.path.join(os.getcwd(), 'content'), filename=fn)
+            glue.lf('{}.mp4'.format(fn))
+        except:
+            pass
     def reddit_download(self):
         site_url = "https://reddit.tube/parse"
         response = requests.get(site_url, params={
