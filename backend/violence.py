@@ -221,34 +221,36 @@ class VideoDetect:
         self.sns.delete_topic(TopicArn=self.snsTopicArn)
 
 
-def handleViolenceVideo(file, name):
-    #setup Boto3
-    s3 = boto3.resource('s3')
-    bucket = s3.Bucket('files-protest')
-    #upload file
-    bucket.upload_fileobj(file, name)
-    #rekognition
-    analyzer= VideoDetect(name)
-    analyzer.CreateTopicandQueue()
+def handleViolenceVideo(name):
+    with open(name, 'r') as file:
+        #setup Boto3
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket('files-protest')
+        #upload file
+        bucket.upload_fileobj(file, name)
+        #rekognition
+        analyzer= VideoDetect(name)
+        analyzer.CreateTopicandQueue()
 
-    analyzer.StartUnsafeContent()
-    if analyzer.GetSQSMessageSuccess()==True:
-        is_violence = analyzer.GetUnsafeContentResults()
-    
-    analyzer.DeleteTopicandQueue()
-    #Delete video
-    response = bucket.delete_objects(Delete={
-        'Objects': [{ 'Key': name }]
-    })
-    return is_violence
+        analyzer.StartUnsafeContent()
+        if analyzer.GetSQSMessageSuccess()==True:
+            is_violence = analyzer.GetUnsafeContentResults()
         
-def handleViolenceImage(file, name):
-    rekognition = boto3.client('rekognition')
-    response = rekognition.detect_moderation_labels(Image={
-        'Bytes': file
-    })
-    for label in response['ModerationLabels']:
-        if 'Violence' in label['Name']:
-            return True
-    return False
+        analyzer.DeleteTopicandQueue()
+        #Delete video
+        response = bucket.delete_objects(Delete={
+            'Objects': [{ 'Key': name }]
+        })
+        return is_violence
+        
+def handleViolenceImage(name):
+    with open(name, 'r') as file:
+        rekognition = boto3.client('rekognition')
+        response = rekognition.detect_moderation_labels(Image={
+            'Bytes': file
+        })
+        for label in response['ModerationLabels']:
+            if 'Violence' in label['Name']:
+                return True
+        return False
     
