@@ -13,6 +13,8 @@ import {LinearGradient} from 'expo-linear-gradient';
 import CustomHeader from '../../components/Header'
 import CustomText from '../../components/TextField'
 
+import API_KEY from '../../env'
+
 class PostScreen extends React.Component {
 
   state = {
@@ -79,7 +81,7 @@ class PostScreen extends React.Component {
               }
             }}
             query={{
-              key: 'AIzaSyCIX79g46mQ4zIkLiNX4FpdsBo_6nh52fs',
+              key: API_KEY,
               language: 'en',
             }}
           />
@@ -146,7 +148,24 @@ class PostScreen extends React.Component {
   };
 
   _submitPhoto = () => {
-    this.props.navigation.navigate('Analyze', {image: this.state.image})
+    let photo = { uri: this.state.image}
+    let formdata = new FormData();
+    
+    formdata.append("lat", this.state.lat)
+    formdata.append("long", this.state.long)
+    formdata.append("file", {uri: photo, name: 'image.jpg', type: 'image/jpeg'})
+
+    fetch('https://activistarmor.online/api/upload',{
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formdata
+      }).then(response => {
+        console.log("form sent")
+      }).catch(err => {
+        console.log(err)
+      })  
   }
 }
 
