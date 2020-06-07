@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     elevation: 5,
     paddingVertical: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     marginHorizontal: 8,
   },
   postLocation: {

@@ -37,14 +37,16 @@ export default class CustomHeader extends React.Component{
           leftStyle={styles.leftButton}
           style={{margin: 0}}
         />
-        <Input
-          right
-          color="black"
-          style={styles.search}
-          placeholder="What are you looking for?"
-          onFocus={() => navigation.navigate('Pro')}
-          iconContent={<MaterialIcons size={16} color={theme.COLORS.MUTED} name="search" family="entypo" />}
-        />
+        {
+          this.props.title == "Post" ? <></>:
+          <Input
+            right
+            color="black"
+            style={styles.search}
+            placeholder="What are you looking for?"
+            iconContent={<MaterialIcons size={16} color={theme.COLORS.MUTED} name="search" family="entypo" />}
+          />
+        }
       </View>
     )
   }

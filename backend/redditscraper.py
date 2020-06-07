@@ -14,12 +14,9 @@ reddit = praw.Reddit(
     client_secret=client_secret,
     password=password, 
     user_agent='ActivistArmor python scraper', 
-    username='ActivistArmor', 
+    username='ActivistArmor'
 )
 
 sub = reddit.subreddit('Bad_Cop_No_Donut')
 for submission in sub.stream.submissions():
     file = contentcleaner.Check(submission)
-    if file.name:
-        # send the file.name to Jainil to test for cop and then violence
-        print('Saved to: {}'.format(file.name))

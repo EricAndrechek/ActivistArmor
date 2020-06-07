@@ -6,11 +6,11 @@ from bs4 import BeautifulSoup
 import os
 import re
 from pytube import YouTube
-
+import uuid
+import glue
 
 class Check():
     def __init__(self, post):
-        self.name=None
         self.permalink = "https://reddit.com{}".format(post.permalink)
         self.url = post.url
         if self.valid_site():
@@ -26,8 +26,9 @@ class Check():
             elif self.is_downloadable():
                 self.download(self.url.rsplit('/', 1)[1])
             else:
-                self.wildcard_download()
-    
+                # self.wildcard_download()
+                # I've turned off website wildcard downloading because the content was usually pretty bad
+                pass
     def wildcard_download(self):
         soup = BeautifulSoup(requests.get(self.url).text, features="lxml")
         for link in soup.find_all('img'):
@@ -38,11 +39,10 @@ class Check():
                     if '?' in fname:
                         fname = fname.split('?')[0]
                     self.download(fname)
-    
-    def youtube_download(self, filename):
-        yt = YouTube(self.url).streams.first().download(output_path=os.path.join(os.getcwd(), 'content'), filename=filename)
-        self.name = '{}.mp4'.format(filename)
-
+    def youtube_download(self):
+        fn = str(uuid.uuid4())
+        yt = YouTube(self.url).streams.first().download(output_path=os.path.join(os.getcwd(), 'content'), filename=fn)
+        glue.lf('{}.mp4'.format(fn))
     def reddit_download(self):
         site_url = "https://reddit.tube/parse"
         response = requests.get(site_url, params={
@@ -50,7 +50,6 @@ class Check():
         })
         self.url = response.json()['share_url']
         self.download()
-    
     def is_downloadable(self):
         h = requests.head(self.url, allow_redirects=True)
         header = h.headers
@@ -61,18 +60,19 @@ class Check():
             if 'html' in content_type.lower():
                 return False
         return True
-    
     def download(self, filename=None):
+        pre = str(uuid.uuid4())
         r = requests.get(self.url)
         try:
             ct = r.headers['content-type'].split('/')[1]
             if filename is None:
-                fn = self.url.rsplit('/', 1)[1] + '.' + ct
+                fn = pre + '.' + ct
             else:
-                fn = filename
+                fn = pre + '.' + filename.split('.')[1]
             open(os.path.join(os.path.join(os.getcwd(), 'content'), fn), 'wb+').write(r.content)
-            self.name = fn
-    
+            glue.lf(fn)
+        except:
+            pass
     def valid_site(self):
         try:
             return requests.head(self.url).status_code

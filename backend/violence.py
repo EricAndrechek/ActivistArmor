@@ -120,6 +120,48 @@ class VideoDetect:
                 else:
                     finished = True
             return False
+    
+    # ============== Unsafe content =============== 
+    def StartUnsafeContent(self):
+        response=self.rek.start_content_moderation(Video={'S3Object': {'Bucket': self.bucket, 'Name': self.video}},
+            NotificationChannel={'RoleArn': self.roleArn, 'SNSTopicArn': self.snsTopicArn})
+
+        self.startJobId=response['JobId']
+        print('Start Job Id: ' + self.startJobId)
+
+    def GetUnsafeContentResults(self):
+        maxResults = 10
+        paginationToken = ''
+        finished = False
+
+        while finished == False:
+            response = self.rek.get_content_moderation(JobId=self.startJobId,
+                                                MaxResults=maxResults,
+                                                NextToken=paginationToken)
+
+            print('Codec: ' + response['VideoMetadata']['Codec'])
+            print('Duration: ' + str(response['VideoMetadata']['DurationMillis']))
+            print('Format: ' + response['VideoMetadata']['Format'])
+            print('Frame rate: ' + str(response['VideoMetadata']['FrameRate']))
+            print()
+
+            for contentModerationDetection in response['ModerationLabels']:
+                if 'Violence' in str(contentModerationDetection['ModerationLabel']['Name']) and float(contentModerationDetection['ModerationLabel']['Confidence']) > 75:
+                    return True
+                print('Label: ' +
+                    str(contentModerationDetection['ModerationLabel']['Name']))
+                print('Confidence: ' +
+                    str(str(contentModerationDetection['ModerationLabel']['Confidence'])))
+                print('Parent category: ' +
+                    str(contentModerationDetection['ModerationLabel']['ParentName']))
+                print('Timestamp: ' + str(contentModerationDetection['Timestamp']))
+                print()
+
+            if 'NextToken' in response:
+                paginationToken = response['NextToken']
+            else:
+                finished = True
+            return False
        
     
     def CreateTopicandQueue(self):
@@ -179,7 +221,7 @@ class VideoDetect:
         self.sns.delete_topic(TopicArn=self.snsTopicArn)
 
 
-def handleViolence(file, name):
+def handleViolenceVideo(file, name):
     #setup Boto3
     s3 = boto3.resource('s3')
     bucket = s3.Bucket('files-protest')
@@ -189,11 +231,24 @@ def handleViolence(file, name):
     analyzer= VideoDetect(name)
     analyzer.CreateTopicandQueue()
 
-    analyzer.StartLabelDetection()
+    analyzer.StartUnsafeContent()
     if analyzer.GetSQSMessageSuccess()==True:
-        response = analyzer.GetLabelDetectionResults()
+        is_violence = analyzer.GetUnsafeContentResults()
     
     analyzer.DeleteTopicandQueue()
-    #labels = rekognition.get_label_detection(JobId=job_id, MaxResults=10, SortBy='NAME')
-    return response
+    #Delete video
+    response = bucket.delete_objects(Delete={
+        'Objects': [{ 'Key': name }]
+    })
+    return is_violence
+        
+def handleViolenceImage(file, name):
+    rekognition = boto3.client('rekognition')
+    response = rekognition.detect_moderation_labels(Image={
+        'Bytes': file
+    })
+    for label in response['ModerationLabels']:
+        if 'Violence' in label['Name']:
+            return True
+    return False
     
