@@ -34,6 +34,7 @@ export default class CustomText extends Component {
           onChangeText={field => this.setState({field})}
           ref={this.fieldRef}
           baseColor={'#616161'}
+          multiline={this.props.multiline}
         />
         </View>
     );

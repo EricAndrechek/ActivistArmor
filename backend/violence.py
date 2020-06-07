@@ -236,7 +236,7 @@ def handleViolenceVideo(file, name):
         is_violence = analyzer.GetUnsafeContentResults()
     
     analyzer.DeleteTopicandQueue()
-    #Delete video if no Violence
+    #Delete video
     response = bucket.delete_objects(Delete={
         'Objects': [{ 'Key': name }]
     })
