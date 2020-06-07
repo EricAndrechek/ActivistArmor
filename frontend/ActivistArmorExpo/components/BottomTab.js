@@ -1,10 +1,5 @@
 import * as React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  TouchableOpacity, 
-  View,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Icon } from "react-native-elements";
@@ -48,48 +43,13 @@ function PostButton(props){
   )
 }
 
-function LeftMenu(props){
-  return(
-    <TouchableOpacity>
-      <MaterialCommunityIcons name={"menu-open"} size={30} color={'white'}/>
-    </TouchableOpacity>
-  )
-}
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  headerText:{
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
-    marginLeft: 25,
-  },
-  leftButton: {
-    flex: 0.3,
-    margin: 0,
-  },
-  search: {
-    width: 380,
-    alignSelf: 'center',
-    borderWidth: 1,
-    borderRadius: 15,
-    borderColor: '#cccccc',
-    marginBottom: 5,
-  },
   bottomTab: {
     height: 60,
     borderBottomWidth: 0,
-  },
-  rowBar: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
   },
   row: {
     flex: 1,

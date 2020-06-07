@@ -8,13 +8,13 @@ import CustomBottomTab from '../../components/BottomTab'
 
 const manual_data = [
   {
-    url: 'https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg',
+    url: 'https://www.commondreams.org/sites/default/files/styles/cd_large/public/headlines/cops_cops.png?itok=iWwv817T',
     timestamp: "14:34:15 UTC 06/06/2020",
     longitude: -122.4324,
     latitude: 37.78825, 
   },
   {
-    url: 'https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg',
+    url: 'https://www.commondreams.org/sites/default/files/styles/cd_large/public/headlines/cops_cops.png?itok=iWwv817T',
     timestamp: "14:34:15 UTC 06/06/2020",
     longitude: -122.4324,
     latitude: 37.79825, 
