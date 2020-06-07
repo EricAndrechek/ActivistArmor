@@ -18,7 +18,7 @@ def postPicture():
     filename = "{}.{}".format(str(uuid.uuid4()), ending)
     fullname = os.path.join(os.path.join(os.getcwd(), 'content'), filename)
     media.save(fullname)
-    glue.lf(filename)
+    glue.uf(filename, location)
     return "yeet lmfao" # we will need to change this to something useful
 
 

@@ -1,17 +1,47 @@
 import subprocess
 import facefinder
 from violence import handleViolence
+import digitalocean
+import os
+import metadata
 
 # glue.py is the glue that holds all the code together
 
-def lf(fn):
-    # LocalFile, takes filename to local file
+def uf(fn, location):
+    lat, lon = metadata.coords(fn)
+    metadata.wipe(fn)
+    if lat is not None and lon is not None:
+        lf(fn, (lat, lon))
+    else:
+        lf(fn)
+
+def lf(fn, loc=None):
+    # LocalFile, takes filename to local file, location
     # that has been download from flask server or scraper
     # and checks if it has faces before continuing
     ft = filetype(fn)
     if ft == 1:
         if facefinder.image_face(fn):
-            handleViolence(media, fn)
+            if handleViolence(fn):
+                # blur faces that aren't cops
+                url = digitalocean.Storage().upload(fn)
+                # add url and loc to mongoDB
+            else:
+                remove(fn)
+        else:
+            remove(fn)
+    elif ft == 2:
+        if facefinder.video_face(fn):
+            if handleViolence(fn):
+                # blur faces that aren't cops
+                url = digitalocean.Storage().upload(fn)
+                # and url and loc to mongoDB
+            else:
+                remove(fn)
+        else:
+            remove(fn)
+    else:
+        remove(fn)
 
 def filetype(filename):
     s = subprocess.Popen(['file', '--mime-type', '-b', 'content/{}'.format(filename)], stdout=subprocess.PIPE)
@@ -22,3 +52,6 @@ def filetype(filename):
         return 1
     else:
         return None
+
+def remove(filename):
+    os.remove('content/{}'.format(filename))
