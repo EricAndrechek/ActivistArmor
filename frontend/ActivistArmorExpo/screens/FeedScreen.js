@@ -15,9 +15,9 @@ const data = [
     id: 1,
   },
   {
-    location: "Alternate Buffalo, New York",
-    image: require('../assets/images/buffaloriotattack.jpg'),
-    caption: "Alternate Buffalo Riot Attack",
+    location: "London, UK",
+    image: require('../assets/images/londonattack.jpg'),
+    caption: "London attack",
     comments: ["wait what", "so uncool", "huh"],
     id: 2,
   }
