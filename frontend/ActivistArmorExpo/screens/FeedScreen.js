@@ -1,23 +1,7 @@
 import * as React from 'react';
-import { 
-  Image, 
-  Platform, 
-  StyleSheet, 
-  Text, 
-  TouchableOpacity, 
-  View,
-  FlatList,
-} from 'react-native';
-
-
-import {ScrollView} from 'react-native-gesture-handler';
-import GestureRecognizer from 'react-native-swipe-gestures';
-
+import { Image, StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-
 import {LinearGradient} from 'expo-linear-gradient';
-
-import {connect} from 'react-redux';
 
 import CustomHeader from '../components/Header'
 import CustomBottomTab from '../components/BottomTab'
@@ -39,7 +23,7 @@ const data = [
   }
 ]
 
-class FeedScreen extends React.Component{
+export default class FeedScreen extends React.Component{
 
   state = {
     data: []
@@ -59,39 +43,20 @@ class FeedScreen extends React.Component{
 
   render(){
     return (
-      <GestureRecognizer 
-      style={styles.container}
-      onSwipeLeft={this._onSwipeLeft}>
-        
-        <LinearGradient colors={['#2193b0', '#6dd5ed']} 
-          style={styles.container}>
-          <CustomHeader nav={this.props.navigation} title={"Feed"}/>
-        
-          <FlatList
-            data={data}
-            renderItem={({ item }) => <Post postData={item} />}
-            keyExtractor={item => item.id}
-            style={styles.listContainer}
-          />
-          <CustomBottomTab nav={this.props.navigation}/>
-        </LinearGradient>
-      </GestureRecognizer>
+      <LinearGradient colors={['#2193b0', '#6dd5ed']} 
+        style={styles.container}>
+        <CustomHeader nav={this.props.navigation} title={"Feed"}/>
+      
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <Post postData={item} />}
+          keyExtractor={item => item.id}
+          style={styles.listContainer}
+        />
+        <CustomBottomTab nav={this.props.navigation}/>
+      </LinearGradient>
     );
   }
-
-  _onSwipeLeft = gestureState =>{
-    this.props.navigation.navigate('Map')
-  }  
-}
-
-FeedScreen.navigationOptions = {
-  header: null,
-};
-
-function Test(){
-  return(
-    <Text>testingone</Text>
-  )
 }
 
 function Post(input){
@@ -106,19 +71,6 @@ function Post(input){
       <Image source={input.postData.image} style={styles.postImage}/>
     </View>
   )
-}
-
-function mapStateToProps(state){
-  return{
-    counter:state.counter
-  }
-}
-
-function mapDispatchToProps(dispatch){
-  return{
-    increaseCounter: () => dispatch({type:'INCREASE_COUNTER'}),
-    decreaseCounter: () => dispatch({type: 'DECREASE_COUNTER'}),
-  }
 }
 
 const styles = StyleSheet.create({
@@ -172,5 +124,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(FeedScreen);

@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { 
-  Image, 
-  Platform, 
   StyleSheet, 
   Text, 
   TouchableOpacity, 
   View,
-  FlatList
 } from 'react-native';
 
-import {NavBar, Input, theme} from 'galio-framework'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Icon } from "react-native-elements";
-import {LinearGradient} from 'expo-linear-gradient'
 
 export default class CustomBottomTab extends React.Component{
   renderRight = () => {

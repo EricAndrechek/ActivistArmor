@@ -1,22 +1,20 @@
 
 import * as React from 'react';
-import {ImageBackground, Text, TouchableOpacity, Image, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import {Text, TouchableOpacity, Image, View, StyleSheet} from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import {connect} from 'react-redux';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-//import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import {LinearGradient} from 'expo-linear-gradient';
-import CustomHeader from '../../components/Header'
-import CustomBottomTab from '../../components/BottomTab'
-import CustomText from '../../components/TextField'
+import CustomHeader from '../components/Header'
+import CustomBottomTab from '../components/BottomTab'
+import CustomText from '../components/TextField'
 
-import API_KEY from '../../env'
+import API_KEY from '../env'
 
-class PostScreen extends React.Component {
+export default class PostScreen extends React.Component {
 
   state = {
     image: null,
@@ -39,7 +37,7 @@ class PostScreen extends React.Component {
               <Image source={{ uri: image }} style={styles.emptyPhoto} />
               : 
               <Image source={
-                require('../../assets/images/camera.png')
+                require('../assets/images/camera.png')
               } style={styles.emptyPhoto} />
             }  
             <View style={{ flex: 2 }}>
@@ -171,20 +169,6 @@ class PostScreen extends React.Component {
   }
 }
 
-
-function mapStateToProps(state){
-  return{
-    counter:state.counter
-  }
-}
-
-function mapDispatchToProps(dispatch){
-  return{
-    increaseCounter: () => dispatch({type:'INCREASE_COUNTER'}),
-    decreaseCounter: () => dispatch({type: 'DECREASE_COUNTER'}),
-  }
-}
-
 const styles = StyleSheet.create({
   container:{
     flex: 1,
@@ -245,5 +229,3 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 })
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
