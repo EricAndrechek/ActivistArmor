@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, FlatList, ScrollView} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import {LinearGradient} from 'expo-linear-gradient';
+import {Video} from 'expo-av';
 
 import CustomHeader from '../components/Header'
 import CustomBottomTab from '../components/BottomTab'
@@ -9,12 +10,12 @@ import CustomBottomTab from '../components/BottomTab'
 const data = [
   {
     address: "Buffalo, New York",
-    image: require('../assets/images/buffaloriotattack.jpg'),
+    image: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/c36b4d03-9d1e-471c-8b7d-b7c0ebd5f894.png",
     id: 1,
   },
   {
     address: "London, UK",
-    image: require('../assets/images/londonattack.jpg'),
+    image: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/c36b4d03-9d1e-471c-8b7d-b7c0ebd5f894.png",
     id: 2,
   }
 ]
@@ -47,6 +48,7 @@ export default class FeedScreen extends React.Component{
           keyExtractor={item => item.id}
           style={styles.listContainer}
         >
+          <Image source={{uri: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/c36b4d03-9d1e-471c-8b7d-b7c0ebd5f894.png"}} style={styles.postImage}/> 
           {data.map((item, key) => ( 
             <Post postData={item} key={key} />
           ))}
@@ -66,7 +68,9 @@ function Post(input){
           <MaterialCommunityIcons name={'dots-horizontal'} size={30}/>
         </TouchableOpacity>
       </View>
-      <Image source={input.postData.image} style={styles.postImage}/>
+      <Image source={{uri: input.postData.image}} style={styles.postImage}/> 
+      
+      
     </View>
   )
 }
