@@ -10,12 +10,12 @@ import CustomBottomTab from '../components/BottomTab'
 const data = [
   {
     address: "Buffalo, New York",
-    image: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/c36b4d03-9d1e-471c-8b7d-b7c0ebd5f894.png",
+    image: require('../assets/images/buffaloriotattack.jpg'),
     id: 1,
   },
   {
     address: "London, UK",
-    image: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/c36b4d03-9d1e-471c-8b7d-b7c0ebd5f894.png",
+    image: require('../assets/images/londonattack.jpg'),
     id: 2,
   }
 ]
@@ -48,7 +48,6 @@ export default class FeedScreen extends React.Component{
           keyExtractor={item => item.id}
           style={styles.listContainer}
         >
-          <Image source={{uri: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/c36b4d03-9d1e-471c-8b7d-b7c0ebd5f894.png"}} style={styles.postImage}/> 
           {data.map((item, key) => ( 
             <Post postData={item} key={key} />
           ))}
@@ -68,9 +67,22 @@ function Post(input){
           <MaterialCommunityIcons name={'dots-horizontal'} size={30}/>
         </TouchableOpacity>
       </View>
-      <Image source={{uri: input.postData.image}} style={styles.postImage}/> 
-      
-      
+      {
+      (input.postData.image.uri.includes(".png") || input.postData.image.uri.includes(".jpg"))?
+
+      <Image source={input.postData.image} style={styles.postImage}/> 
+      :
+      <Video
+        source={{uri: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/a285e2bb-a79f-488a-baa4-7bafa80fae96.mp4"}}
+        style={styles.postImage}
+        rate={1.0}
+        volume={1.0}
+        isMuted={false}
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+      />
+      }
     </View>
   )
 }
