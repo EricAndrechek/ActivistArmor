@@ -1,25 +1,26 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
 import {Header} from 'react-native-elements'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Callout} from 'react-native-maps';
 import {LinearGradient} from 'expo-linear-gradient';
 
 import {connect} from 'react-redux';
 
 
-import CustomHeader from '../components/Header'
+import CustomHeader from '../../components/Header'
 
-import CustomBottomTab from '../components/BottomTab'
-const data = [
+import CustomBottomTab from '../../components/BottomTab'
+const manual_data = [
   {
     lat: 37.78825, 
     long: -122.4324,
     title: "mark1",
     description: "descrip1",
+    url: 'https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg',
     id: 1,
   },
   {
@@ -27,11 +28,29 @@ const data = [
     long: -122.4324,
     title: "mark2",
     description: "descrip2",
+    url: 'https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg',
     id: 2,
   }
 ]
 
 class MapScreen extends React.Component {
+  
+  state = {
+    data: []
+  }
+
+  componentDidMount(){
+    // this.receiveData()
+  }
+  
+  receiveData = () => {
+    fetch('https://activistarmor.online/api/map', {
+      method: 'GET'
+    }).then(res => res.json()).then(res => {
+      this.setState({ data: res })
+    })
+  }
+
   render(){
     return (
       <GestureRecognizer style={styles.container} onSwipeRight={this._onSwipeRight}>
@@ -48,13 +67,16 @@ class MapScreen extends React.Component {
               longitudeDelta: 0.0421,
             }}
           >
-            {data.map(marker => ( 
+            {manual_data.map(marker => ( 
               <Marker
                 coordinate={{latitude: marker.lat, longitude: marker.long}}
                 title={marker.title}
                 description={marker.description}  
                 keyExtractor={marker => marker.id}
-              />
+              >
+                <Callout tooltip style={styles.customView} onPress={() => (this.markerClick(marker.url))}>
+                </Callout>
+              </Marker>
             ))}
           </MapView>
           
@@ -63,6 +85,10 @@ class MapScreen extends React.Component {
     );
   }
   
+  markerClick(url){
+    this.props.navigation.navigate('View', {imageUrl: url})
+  }
+
   _onSwipeRight = gestureState =>{
     this.props.navigation.navigate('Feed')
   }  

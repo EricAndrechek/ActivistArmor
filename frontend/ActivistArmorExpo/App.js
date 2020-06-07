@@ -2,24 +2,19 @@ import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import { Icon } from "react-native-elements";
-
 import {createStackNavigator} from 'react-navigation-stack';
 
 import FeedScreen from './screens/FeedScreen';
-import MapScreen from './screens/MapScreen';
+import MapScreen from './screens/mapscreens/MapScreen';
 import PostScreen from './screens/postscreens/PostScreen';
-
-const BottomTab = createBottomTabNavigator();
+import ViewScreen from './screens/mapscreens/ViewScreen';
 
 import { createStore } from 'redux';
 import {Provider} from 'react-redux';
-
 const initialState = {
   counter : 0
 }
-
 const reducer = (state = initialState, action) => {
   switch(action.type){
     case 'INCREASE_COUNTER':
@@ -27,9 +22,26 @@ const reducer = (state = initialState, action) => {
   }
   return state
 }
-
 const store = createStore(reducer);
 
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Stack = createMaterialTopTabNavigator();
+function Maps() {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={"Map"} 
+    tabBarOptions={{
+      indicatorContainerStyle:{
+        opacity: 0,
+      }
+    }}>
+      <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen name="View" component={ViewScreen} />
+    </Stack.Navigator>
+  );
+}
+
+const BottomTab = createBottomTabNavigator();
 
 export default function App() {
   return (
@@ -65,7 +77,7 @@ export default function App() {
             />
             <BottomTab.Screen
               name="Map"
-              component={MapScreen}
+              component={Maps}
             />
             <BottomTab.Screen
               name="Post"
