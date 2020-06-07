@@ -8,20 +8,16 @@ import CustomBottomTab from '../../components/BottomTab'
 
 const manual_data = [
   {
-    lat: 37.78825, 
-    long: -122.4324,
-    title: "mark1",
-    description: "descrip1",
     url: 'https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg',
-    id: 1,
+    timestamp: "14:34:15 UTC 06/06/2020",
+    longitude: -122.4324,
+    latitude: 37.78825, 
   },
   {
-    lat: 37.79825, 
-    long: -122.4324,
-    title: "mark2",
-    description: "descrip2",
     url: 'https://thumbs.dreamstime.com/b/spring-flowers-blue-crocuses-drops-water-backgro-background-tracks-rain-113784722.jpg',
-    id: 2,
+    timestamp: "14:34:15 UTC 06/06/2020",
+    longitude: -122.4324,
+    latitude: 37.79825, 
   }
 ]
 
@@ -58,12 +54,12 @@ export default class MapScreen extends React.Component {
         >
           {manual_data.map((marker,key) => ( 
             <Marker
-              coordinate={{latitude: marker.lat, longitude: marker.long}}
-              title={marker.title}
-              description={marker.description}  
+              coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+              title={"Police assault"}
+              description={marker.timestamp}
               key={key}
             >
-              <Callout tooltip style={styles.customView} onPress={() => (this.markerClick(marker.url))}>
+              <Callout onPress={() => (this.markerClick(marker.url))}>
               </Callout>
             </Marker>
           ))}
@@ -81,13 +77,6 @@ export default class MapScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  headerText:{
-    color: 'black',
-    fontSize: 20,
   },
 });
 

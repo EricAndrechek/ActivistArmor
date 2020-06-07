@@ -6,8 +6,8 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
 import {LinearGradient} from 'expo-linear-gradient';
+
 import CustomHeader from '../components/Header'
 import CustomBottomTab from '../components/BottomTab'
 import CustomText from '../components/TextField'
@@ -174,39 +174,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#eeeeee',
   },
-  headerBack:{ 
-    height: 60,
-  },
-  imageContainer: {
-    backgroundColor: 'white',
-    padding: 5,
-    borderRadius: 20,
-    marginHorizontal: 63,
-    margin: 5,
-  },
   emptyPhoto: {
     width: 100,
     height: 100,
     borderRadius: 5,
     flex: 0.7
-  },
-  pictureTaking:{
-    alignSelf: 'center',
-    width: 390,
-    height: 200,
-    borderRadius: 10,
-    marginHorizontal: 2,
-    marginBottom: 2,
-  },
-  headerText:{
-    color: 'black',
-    fontSize: 20,
-  },
-  button: {
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 5,
-    backgroundColor: 'lightblue',
   },
   infoCard: {
     backgroundColor: 'lightblue',

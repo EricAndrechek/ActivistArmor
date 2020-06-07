@@ -78,9 +78,6 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
   },
-  contentContainer: {
-    flex: 1,
-  },
   row: {
     flex: 1,
     flexDirection: 'row',
@@ -109,19 +106,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
   },
-  postCommentBox: {
-  },
-  comment: {
-    color: '#9e9e9e',
-    padding: 5,
-    paddingHorizontal: 10,
-    fontSize: 14,
-  },
-  infoBox: {
-    paddingTop: 5,
-    paddingHorizontal: 8,
-    fontWeight: 'bold',
-  }
 });
 
 /*
