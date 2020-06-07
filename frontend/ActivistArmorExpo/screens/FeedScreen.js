@@ -40,6 +40,23 @@ const data = [
 ]
 
 class FeedScreen extends React.Component{
+
+  state = {
+    data: []
+  }
+
+  componentDidMount(){
+    // this.receiveData()
+  }
+  
+  receiveData = () => {
+    fetch('https://activistarmor.online/api/feed', {
+      method: 'GET'
+    }).then(res => res.json()).then(res => {
+      this.setState({ data: res })
+    })
+  }
+
   render(){
     return (
       <GestureRecognizer 
@@ -86,12 +103,6 @@ function Post(input){
         </TouchableOpacity>
       </View>
       <Image source={input.postData.image} style={styles.postImage}/>
-      <Text style={styles.infoBox}>
-        Buffalo Riot Attack
-      </Text>
-      <View style={styles.postCommentbox}>
-        <Text style={styles.comment}>Comments</Text>
-      </View>
     </View>
   )
 }
