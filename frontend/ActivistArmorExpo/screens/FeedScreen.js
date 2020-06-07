@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, FlatList, ScrollView} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import {LinearGradient} from 'expo-linear-gradient';
 
@@ -8,17 +8,13 @@ import CustomBottomTab from '../components/BottomTab'
 
 const data = [
   {
-    location: "Buffalo, New York",
+    address: "Buffalo, New York",
     image: require('../assets/images/buffaloriotattack.jpg'),
-    caption: "Buffalo Riot Attack",
-    comments: ["wait what", "so uncool"],
     id: 1,
   },
   {
-    location: "London, UK",
+    address: "London, UK",
     image: require('../assets/images/londonattack.jpg'),
-    caption: "London attack",
-    comments: ["wait what", "so uncool", "huh"],
     id: 2,
   }
 ]
@@ -46,13 +42,15 @@ export default class FeedScreen extends React.Component{
       <LinearGradient colors={['#2193b0', '#6dd5ed']} 
         style={styles.container}>
         <CustomHeader nav={this.props.navigation} title={"Feed"}/>
-      
-        <FlatList
+        <ScrollView
           data={data}
-          renderItem={({ item }) => <Post postData={item} />}
           keyExtractor={item => item.id}
           style={styles.listContainer}
-        />
+        >
+          {data.map((item, key) => ( 
+            <Post postData={item} key={key}/>
+          ))}
+        </ScrollView>
         <CustomBottomTab nav={this.props.navigation}/>
       </LinearGradient>
     );
@@ -63,9 +61,9 @@ function Post(input){
   return(
     <View style={styles.post}>
       <View style={styles.row}>
-        <Text style={styles.postLocation}>{input.postData.location}</Text>
-        <TouchableOpacity style={{paddingTop: 0}}>
-          <MaterialCommunityIcons name={'dots-horizontal'} size={20}/>
+        <Text style={styles.postLocation}>{input.postData.address}</Text>
+        <TouchableOpacity style={{paddingRight: 5}}>
+          <MaterialCommunityIcons name={'dots-horizontal'} size={30}/>
         </TouchableOpacity>
       </View>
       <Image source={input.postData.image} style={styles.postImage}/>
@@ -92,13 +90,14 @@ const styles = StyleSheet.create({
   post: {
     backgroundColor: 'white',
     borderWidth: 0,
-    borderRadius: 5,
+    borderRadius: 10,
     borderColor: '#e0e0e0',
     flex: 1,
     elevation: 5,
-    paddingBottom: 10,
+    paddingTop: 10,
     marginBottom: 10,
     marginHorizontal: 12,
+    overflow: 'hidden',
   },
   postLocation: {
     paddingBottom: 5,
@@ -124,3 +123,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }
 });
+
+/*
+GET request to https://activistarmor.online/api/feed
+Expected Response: 
+{
+  {
+  'url': "https://activist-armor.nyc3.cdn.digitalocean.com/asdhka.mp4",
+  'timestamp': '14:34:15 UTC 06/06/2020',
+  'longitude': "34.324 N",
+  'latitude': "87.3242 W"
+  },
+  {
+  (the same sort of body will repeat with different data and give you exactly 10 of the most recent posts in that format)
+  }
+}
+*/

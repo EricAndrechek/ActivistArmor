@@ -56,12 +56,12 @@ export default class MapScreen extends React.Component {
             longitudeDelta: 0.0421,
           }}
         >
-          {manual_data.map(marker => ( 
+          {manual_data.map((marker,key) => ( 
             <Marker
               coordinate={{latitude: marker.lat, longitude: marker.long}}
               title={marker.title}
               description={marker.description}  
-              keyExtractor={marker => marker.id}
+              key={key}
             >
               <Callout tooltip style={styles.customView} onPress={() => (this.markerClick(marker.url))}>
               </Callout>
@@ -90,3 +90,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+/*
+GET request to https://activistarmor.online/api/map
+Expected Response: 
+{
+  {
+  'url': "https://activist-armor.nyc3.cdn.digitalocean.com/asdhka.mp4",
+  'timestamp': '14:34:15 UTC 06/06/2020',
+  'longitude': "34.324 N",
+  'latitude': "87.3242 W"
+  },
+  {
+  More of the last body for every element in the database
+  }
+}
+
+*/
