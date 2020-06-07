@@ -10,7 +10,7 @@ import CustomBottomTab from '../components/BottomTab'
 const data = [
   {
     address: "Buffalo, New York",
-    image: "https://i.redd.it/cqxp2xypqo941.jpg",
+    image: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/a285e2bb-a79f-488a-baa4-7bafa80fae96.mp4",
     id: 1,
   },
   {
@@ -27,32 +27,36 @@ export default class FeedScreen extends React.Component{
   }
 
   componentDidMount(){
-    this.receiveData()
   }
   
   receiveData = () => {
-    fetch('http:/68.56.112.110/api/feed', {
+    fetch('http://68.56.112.110/api/feed', {
       method: 'GET'
     }).then(res => res.json()).then(res => {
       this.setState({ data: res })
-    })
-    console.log(data)
+    }).then(() => this.setState({ loaded: true }))
+    console.log(this.state.data)
   }
 
   render(){
+    this.receiveData()
     return (
       <LinearGradient colors={['#2193b0', '#6dd5ed']} 
         style={styles.container}>
         <CustomHeader nav={this.props.navigation} title={"Feed"}/>
-        <ScrollView
-          data={data}
-          keyExtractor={item => item.id}
-          style={styles.listContainer}
-        >
-          {data.map((item, key) => ( 
-            <Post postData={item} key={key} />
-          ))}
-        </ScrollView>
+        { 
+          this.state.loaded && (
+            <ScrollView
+              data={this.state.data}
+              keyExtractor={item => item.id}
+              style={styles.listContainer}
+            >
+              {this.state.data.map((item, key) => ( 
+                <Post postData={item} key={key} />
+              ))}
+            </ScrollView>
+          )
+        }
         <CustomBottomTab nav={this.props.navigation}/>
       </LinearGradient>
     );
@@ -69,7 +73,7 @@ function Post(input){
         </TouchableOpacity>
       </View>
       {
-        input.postData.image.includes(".jpg")?
+        input.postData.image.includes(".jpg") || input.postData.image.includes(".png") ?
       <Image source={{uri: input.postData.image}} style={styles.postImage}/> 
       :
       <Video
@@ -77,7 +81,7 @@ function Post(input){
         style={styles.postImage}
         rate={1.0}
         volume={1.0}
-        isMuted={false}
+        isMuted={true}
         resizeMode="cover"
         shouldPlay
         isLooping
