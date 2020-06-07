@@ -26,9 +26,9 @@ def postPicture():
 @app.route("/api/<id>")
 def api(id):
     if id == "feed":
-        return jsonify(str(mongo.feed()))
+        return jsonify(mongo.feed())
     elif id == "map":
-        return jsonify(str(mongo.map()))
+        return jsonify(mongo.map())
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ def db():
 
 def map():
     x  = []
-    cur = db().find().sort([('date', pymongo.ASCENDING)])
+    cur = db().find({}, {'_id': False}).sort([('date', pymongo.ASCENDING)])
     for i in cur:
         x.append(i)
     return x
@@ -23,7 +23,7 @@ def upload(url, loc):
 
 def feed():
     x  = []
-    cur = db().find().sort([('date', pymongo.ASCENDING)])
+    cur = db().find({}, {'_id': False}).sort([('date', pymongo.ASCENDING)])
     for i in cur:
         x.append(i)
     return x
