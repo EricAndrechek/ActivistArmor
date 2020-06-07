@@ -2,6 +2,7 @@ import boto3
 import sys
 import time 
 import json
+import os
 
 class VideoDetect:
     jobId = ''
@@ -222,35 +223,40 @@ class VideoDetect:
 
 
 def handleViolenceVideo(name):
-    with open(name, 'r') as file:
-        #setup Boto3
-        s3 = boto3.resource('s3')
-        bucket = s3.Bucket('files-protest')
-        #upload file
-        bucket.upload_fileobj(file, name)
-        #rekognition
-        analyzer= VideoDetect(name)
-        analyzer.CreateTopicandQueue()
+    print('begining aws')
+    #setup Boto3
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket('files-protest')
+    #upload file
+    bucket.upload_fileobj(os.path.join(os.path.join(os.getcwd(), 'content'), name), name)
+    #rekognition
+    analyzer= VideoDetect(name)
+    analyzer.CreateTopicandQueue()
 
-        analyzer.StartUnsafeContent()
-        if analyzer.GetSQSMessageSuccess()==True:
-            is_violence = analyzer.GetUnsafeContentResults()
+    analyzer.StartUnsafeContent()
+    if analyzer.GetSQSMessageSuccess()==True:
+        is_violence = analyzer.GetUnsafeContentResults()
+    else:
+        is_violence = False
         
-        analyzer.DeleteTopicandQueue()
-        #Delete video
-        response = bucket.delete_objects(Delete={
-            'Objects': [{ 'Key': name }]
-        })
-        return is_violence
+    analyzer.DeleteTopicandQueue()
+    #Delete video
+    response = bucket.delete_objects(Delete={
+        'Objects': [{ 'Key': name }]
+    })
+    print(response)
+    return is_violence
         
 def handleViolenceImage(name):
-    with open(name, 'r') as file:
-        rekognition = boto3.client('rekognition')
-        response = rekognition.detect_moderation_labels(Image={
-            'Bytes': file
-        })
-        for label in response['ModerationLabels']:
-            if 'Violence' in label['Name']:
-                return True
-        return False
+    print('begining aws')
+    rekognition = boto3.client('rekognition')
+    f = open(os.path.join(os.path.join(os.getcwd(), 'content'), name))
+    response = rekognition.detect_moderation_labels(Image={
+        'Bytes': f.read()
+    })
+    print(response)
+    for label in response['ModerationLabels']:
+        if 'Violence' in label['Name']:
+            return True
+    return False
     

@@ -5,7 +5,7 @@ myclient = pymongo.MongoClient("mongodb+srv://activistarmor:JQKlJyZg0UDNcl6s@clu
 mydb = myclient["aa"]
 
 def map():
-    pass
+    return mydb.find()
 
 def upload(url, loc):
     now = datetime.now()
