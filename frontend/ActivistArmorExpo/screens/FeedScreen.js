@@ -33,7 +33,7 @@ export default class FeedScreen extends React.Component{
     fetch('http://68.56.112.110/api/feed', {
       method: 'GET'
     }).then(res => res.json()).then(res => {
-      this.setState({ data: res })
+      this.setState({ data: res.slice(1, 15) })
     }).then(() => this.setState({ loaded: true }))
     console.log(this.state.data)
   }
@@ -47,7 +47,7 @@ export default class FeedScreen extends React.Component{
         { 
           this.state.loaded && (
             <ScrollView
-              data={this.state.data}
+              data={this.state.data.slice(1, 9)}
               keyExtractor={item => item.id}
               style={styles.listContainer}
             >
@@ -73,11 +73,11 @@ function Post(input){
         </TouchableOpacity>
       </View>
       {
-        input.postData.image.includes(".jpg") || input.postData.image.includes(".png") ?
-      <Image source={{uri: input.postData.image}} style={styles.postImage}/> 
+        input.postData.url.includes(".jpg") || input.postData.url.includes(".png") ?
+      <Image source={{uri: input.postData.url}} style={styles.postImage}/> 
       :
       <Video
-        source={{uri: "https://activist-armor.nyc3.cdn.digitaloceanspaces.com/a285e2bb-a79f-488a-baa4-7bafa80fae96.mp4"}}
+        source={{uri: input.postData.url }}
         style={styles.postImage}
         rate={1.0}
         volume={1.0}

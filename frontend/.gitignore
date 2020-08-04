@@ -1,0 +1,16 @@
+node_modules/**/*
+.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.txt
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
+backend/content/
+# macOS
+.DS_Store
+.backend/__pycache__
