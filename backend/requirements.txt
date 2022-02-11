@@ -46,7 +46,7 @@ paramiko==2.7.1
 praw==7.0.0
 prawcore==1.4.0
 prettytable==0.7.2
-protobuf==3.12.2
+protobuf==3.15.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
