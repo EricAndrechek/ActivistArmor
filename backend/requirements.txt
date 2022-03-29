@@ -42,7 +42,7 @@ opencv-python==4.2.0.34
 opencv-utils==0.0.2
 opt-einsum==3.2.1
 pandas==1.0.4
-paramiko==2.7.1
+paramiko==2.10.1
 praw==7.0.0
 prawcore==1.4.0
 prettytable==0.7.2
